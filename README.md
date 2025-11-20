@@ -1,25 +1,61 @@
-# CETΩ – MCMC Corner Plot & Correlation Matrix
+# CETΩ – Cosmological MCMC Validation with BAO (DESI DR2)
 
-Este repositorio genera:
-- `figures/corner_plot.pdf`
-- `figures/corr_matrix.pdf`
+This repository performs an empirical validation of the CETΩ expansion model using radial BAO data (e.g., DESI DR2) through a complete, clean MCMC pipeline.
 
-## Instrucciones
+The code:
+- Fits CETΩ parameters using real BAO data
+- Saves MCMC chains
+- Generates all validation figures:
+  - figures/corner_plot.pdf
+  - figures/corr_matrix.pdf
+  - figures/DH_cetomega_vs_DESI.png
+  - figures/BAO_residuals_cetomega.png
+  - figures/H_of_z_test.png
 
-1. Crear `data/chains.csv` con columnas: `M_star, alpha, epsilon`
-2. Si no tenés MCMC real, podés generar un mock con:
+This repository is a stand-alone BAO validation and complements the full multisurvey CETΩ cosmology project.
 
-```python
-import numpy as np, pandas as pd
-N=10000
-M_star=np.random.normal(3.4e-5,0.7e-5,N)
-alpha=np.random.normal(-1.1,0.3,N)
-epsilon=np.random.normal(0.021,0.005,N)
-pd.DataFrame({"M_star":M_star,"alpha":alpha,"epsilon":epsilon}).to_csv("data/chains.csv",index=False)
-```
+## Repository Structure
+cetomega-mcmc/
+├── data/
+│   ├── desi_dr2_bao.txt
+│   └── …
+├── figures/
+│   ├── BAO_residuals_cetomega.png
+│   ├── DH_cetomega_vs_DESI.png
+│   ├── H_of_z_test.png
+│   ├── corner_plot.pdf
+│   └── corr_matrix.pdf
+├── src/
+│   ├── model_cetomega.py
+│   ├── likelihood_bao.py
+│   ├── run_mcmc.py
+│   ├── run_chi2_mock.py
+│   └── run_test.py
+├── make_corner.py
+├── make_figures.py
+├── create_fake_chains.py
+└── README.md
 
-3. Ejecutar:
-```
-pip install -r requirements.txt
+## Requirements
+
+Python ≥ 3.10
+
+Install dependencies:
+
+```bash
+pip install numpy scipy matplotlib emcee corner pandas
+
+git clone https://github.com/tensorflowcausal/cetomega-mcmc.git
+cd cetomega-mcmc
+
+pip install numpy scipy matplotlib emcee corner pandas
+data/desi_dr2_bao.txt
+python -m src.run_mcmc
+python make_figures.py
 python make_corner.py
-```
+python create_fake_chains.py
+src/model_cetomega.py
+
+BALFAGON C.
+
+
